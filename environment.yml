@@ -1,0 +1,17 @@
+name: env_phefbiler
+channels:
+    - anaconda
+    - conda-forge
+dependencies:
+    - python=3.8
+    - conda-build
+
+    # cores
+    - bibtexparser=1.1.0
+    - beautifulsoup4=4.9.3
+    - fuzzywuzzy=0.18.0
+    - xmltodict=0.12.0
+    
+    # utilities
+    - autopep8
+    - ipykernel
