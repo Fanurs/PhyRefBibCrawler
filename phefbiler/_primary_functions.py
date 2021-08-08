@@ -206,7 +206,8 @@ class BibParser:
         # we extract the pages info from the doi
         if 'doi' not in entry:
             return entry
-        entry['pages'] = entry['doi'].split('.')[-1]
+        if 'pages' not in entry:
+            entry['pages'] = entry['doi'].split('.')[-1]
 
         return entry
     
