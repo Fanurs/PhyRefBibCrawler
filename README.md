@@ -45,7 +45,7 @@ print(content)
 #   year={1957},
 #   volume={105},
 #   number={4},
-#   pages={1413},
+#   pages={1413--1415},
 #   doi={10.1103/physrev.105.1413},
 # }
 ```
