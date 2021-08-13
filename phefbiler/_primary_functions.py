@@ -141,7 +141,7 @@ class SingleRequest:
         bib += '}'
         return bib
 
-    def get_bib(self, n_trials=3, indent=2):
+    def get_bib(self, n_trials=5, indent=2):
         if self.arxiv:
             return self.get_bib_arxiv(indent=indent)
 
@@ -154,7 +154,7 @@ class SingleRequest:
             trial += 1
         return self.doi_to_bib(self.doi)
 
-def get_bib(url, n_trials=3, indent=2):
+def get_bib(url, n_trials=5, indent=2):
     req = SingleRequest(url)
     return req.get_bib(n_trials=n_trials, indent=indent)
 
