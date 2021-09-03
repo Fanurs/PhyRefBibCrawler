@@ -164,16 +164,25 @@ class BibParser:
     def __init__(self):
         self.database = None
 
+    @staticmethod
+    def load(file):
+        return bp.load(file)
+    
+    @staticmethod
+    def loads(string):
+        return bp.loads(string)
+
     def read(self, filename=None, string=None):
         if filename is not None:
             with open(filename, 'r') as file:
-                self.database = bp.load(file)
+                self.database = self.load(file)
         elif string is not None:
-            self.database = bp.loads(string)
+            self.database = self.loads(string)
         else:
             raise ValueError('Has to specify either filename or string')
     
-    def _get_bib_line(self, entry, name, double_quote=False):
+    @staticmethod
+    def _get_bib_line(entry, name, double_quote=False):
         if name not in entry:
             return ''
         
@@ -187,7 +196,8 @@ class BibParser:
             result = name + '={' + entry[name] + '}'
         return result
 
-    def _aps_fixes(self, entry):
+    @staticmethod
+    def _aps_fixes(entry):
         if 'publisher' in entry:
             publisher = ''.join([c if c.isalnum() else ' ' for c in entry['publisher']])
             score1 = fuzz.partial_ratio(publisher.lower(), 'american physical society')
@@ -211,14 +221,14 @@ class BibParser:
 
         return entry
     
+    @staticmethod
     def get_formatted_bib(
-        self,
         entry,
         indent=2,
         exclude=None,
         max_authors=100,
     ):
-        entry = self._aps_fixes(entry)
+        entry = BibParser._aps_fixes(entry)
 
         """process title"""
         title_lines = entry['title'].split('\n')
@@ -259,7 +269,7 @@ class BibParser:
             fields = [field for field in fields]
         bib_lines = ['@' + entry['ENTRYTYPE'] + '{' + entry['ID']]
         for field in fields:
-            line = self._get_bib_line(entry, **field)
+            line = BibParser._get_bib_line(entry, **field)
             if line != '':
                 bib_lines.append(line)
         bib = (',\n' + ' ' * indent).join(bib_lines) + ',\n}\n'
